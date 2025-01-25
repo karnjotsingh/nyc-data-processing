@@ -1,0 +1,52 @@
+services:
+  pgdatabase:
+    image: postgres:13
+    container_name: nyc_taxi_pgdatabase
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    env_file:
+      - .env
+    volumes:
+      - nyc_taxi_data:/var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
+    networks:
+      - nyc_taxi_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: nyc_taxi_pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "8080:80"
+    depends_on:
+      - pgdatabase
+    networks:
+      - nyc_taxi_network
+  
+  nyc_taxi_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nyc_taxi_api
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - pgdatabase
+    networks:
+      - nyc_taxi_network
+
+volumes:
+  nyc_taxi_data:
+
+networks:
+  nyc_taxi_network:
+    driver: bridge

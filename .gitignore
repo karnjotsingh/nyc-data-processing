@@ -1,0 +1,8 @@
+nyc_taxi_data/
+*.csv
+*.csv.gz
+.env
+terraform/.terraform
+*.tfstate
+*.tfstate.backup
+*.lock.hcl
