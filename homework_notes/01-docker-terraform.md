@@ -107,7 +107,7 @@ LIMIT 3
 ```
 
 #### Question 6. For the passengers picked up in October 2019 in the zone named "East Harlem North" which was the drop off zone that had the largest tip?
-Answer: The result is `East Harlem North`.
+Answer: The result is `JFK Airport`.
 ```
 # SQL Query
 
